@@ -4,67 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Icon from "@/components/ui/icon";
 
-interface Indicator {
-  id: string;
-  name: string;
-  enabled: boolean;
-  color: string;
-}
-
 const ChartView = () => {
   const { ticker = 'DOGEUSDT' } = useParams();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   
-  const chartContainerRef = useRef<HTMLDivElement>(null);
-  const chartRef = useRef<IChartApi | null>(null);
-  const candlestickSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
-  
   const [selectedTimeframe, setSelectedTimeframe] = useState(searchParams.get('tf') || '1h');
-  const [chartType, setChartType] = useState<'candlestick' | 'line' | 'area'>('candlestick');
   const [showSettings, setShowSettings] = useState(false);
-  
-  const [indicators, setIndicators] = useState<Indicator[]>([
-    { id: 'rsi', name: 'RSI', enabled: false, color: '#ff6a00' },
-    { id: 'ema', name: 'EMA 20', enabled: false, color: '#00ff7f' },
-    { id: 'bollinger', name: 'Bollinger Bands', enabled: false, color: '#ff2e2e' },
-    { id: 'macd', name: 'MACD', enabled: false, color: '#ffff00' },
-    { id: 'volume', name: 'Volume', enabled: true, color: '#666' },
-    { id: 'pumpdump', name: 'Pump/Dump Signals', enabled: true, color: '#ff6a00' }
-  ]);
-
-  // Mock данные для свечей
-  const generateMockData = useCallback(() => {
-    const data: CandlestickData[] = [];
-    let basePrice = 0.087432;
-    const now = Math.floor(Date.now() / 1000);
-    const timeframeMinutes = {
-      '1m': 1, '5m': 5, '15m': 15, '1h': 60, '4h': 240, '1d': 1440
-    }[selectedTimeframe] || 60;
-    
-    for (let i = 200; i >= 0; i--) {
-      const time = now - (i * timeframeMinutes * 60);
-      const volatility = 0.02;
-      const change = (Math.random() - 0.5) * volatility;
-      
-      const open = basePrice;
-      const close = open * (1 + change);
-      const high = Math.max(open, close) * (1 + Math.random() * 0.01);
-      const low = Math.min(open, close) * (1 - Math.random() * 0.01);
-      
-      data.push({
-        time: time as any,
-        open,
-        high,
-        low,
-        close
-      });
-      
-      basePrice = close;
-    }
-    
-    return data;
-  }, [selectedTimeframe]);
 
   // Инициализация графика
   useEffect(() => {

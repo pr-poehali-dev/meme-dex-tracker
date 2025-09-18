@@ -134,46 +134,154 @@
 }
 
 @layer utilities {
-  .neon-glow {
-    box-shadow:
-      0 0 5px currentColor,
-      0 0 10px currentColor,
-      0 0 15px currentColor;
-  }
-
-  .neon-text {
-    text-shadow:
-      0 0 5px currentColor,
-      0 0 10px currentColor,
-      0 0 15px currentColor;
+  .subtle-glow {
+    box-shadow: 0 0 20px rgba(255, 106, 0, 0.1);
   }
 
   .cyber-card {
     background: linear-gradient(
       135deg,
-      rgba(10, 10, 10, 0.8) 0%,
-      rgba(26, 26, 26, 0.9) 100%
+      rgba(10, 10, 10, 0.95) 0%,
+      rgba(26, 26, 26, 0.98) 100%
     );
-    border: 1px solid rgba(255, 106, 0, 0.3);
+    border: 1px solid rgba(255, 106, 0, 0.2);
     backdrop-filter: blur(10px);
   }
 
-  .pulse-neon {
-    animation: pulse-neon 2s ease-in-out infinite alternate;
+  .pulse-gentle {
+    animation: pulse-gentle 3s ease-in-out infinite;
   }
 
-  @keyframes pulse-neon {
+  @keyframes pulse-gentle {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  .fade-in {
+    animation: fade-in 0.6s ease-out;
+  }
+
+  @keyframes fade-in {
     from {
-      text-shadow:
-        0 0 5px currentColor,
-        0 0 10px currentColor,
-        0 0 15px currentColor;
+      opacity: 0;
+      transform: translateY(20px);
     }
     to {
-      text-shadow:
-        0 0 10px currentColor,
-        0 0 20px currentColor,
-        0 0 30px currentColor;
+      opacity: 1;
+      transform: translateY(0);
     }
+  }
+
+  .slide-up {
+    animation: slide-up 0.8s ease-out;
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .button-glow {
+    transition: all 0.3s ease;
+  }
+
+  .button-glow:hover {
+    box-shadow: 0 0 15px rgba(255, 106, 0, 0.2);
+  }
+
+  .terminal-scan {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .terminal-scan::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 106, 0, 0.3),
+      transparent
+    );
+    animation: scan-line 4s linear infinite;
+  }
+
+  @keyframes scan-line {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .coin-item {
+    transition: all 0.3s ease;
+  }
+
+  .signal-pulse {
+    animation: signal-pulse 2s ease-in-out;
+  }
+
+  @keyframes signal-pulse {
+    0%,
+    100% {
+      background-color: transparent;
+    }
+    50% {
+      background-color: rgba(255, 106, 0, 0.1);
+    }
+  }
+
+  .price-up {
+    animation: price-flash-up 0.6s ease-out;
+  }
+
+  .price-down {
+    animation: price-flash-down 0.6s ease-out;
+  }
+
+  @keyframes price-flash-up {
+    0%,
+    100% {
+      background-color: transparent;
+    }
+    50% {
+      background-color: rgba(0, 255, 127, 0.1);
+    }
+  }
+
+  @keyframes price-flash-down {
+    0%,
+    100% {
+      background-color: transparent;
+    }
+    50% {
+      background-color: rgba(255, 46, 46, 0.1);
+    }
+  }
+
+  .chart-glow {
+    box-shadow: 0 0 30px rgba(255, 106, 0, 0.05);
   }
 }

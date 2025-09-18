@@ -61,15 +61,15 @@ export default function Index() {
         <div className="relative container mx-auto px-4 py-16 text-center">
           <div className="mb-6">
             <h1 className="text-6xl mb-4 heading-hero">
-              <span className="text-neon-orange neon-text pulse-neon">Meme</span>
-              <span className="text-neon-green neon-text">Dex</span>
+              <span className="text-neon-orange">Meme</span>
+              <span className="text-neon-green">Dex</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 font-body">
               Realtime графики мем-коинов. Pump & Dump сигналы до того, как рынок рванёт
             </p>
             <Button 
               size="lg" 
-              className="bg-neon-orange hover:bg-neon-orange/80 text-black font-bold neon-glow"
+              className="bg-neon-orange hover:bg-neon-orange/80 text-black font-bold"
             >
               <Icon name="Rocket" className="mr-2 h-5 w-5" />
               🚀 Открыть дашборд
@@ -200,21 +200,21 @@ export default function Index() {
                   onClick={() => navigate(`/chart/${selectedCoin}`)}
                 >
                   <div className="text-center">
-                    <Icon name="BarChart3" className="h-16 w-16 text-neon-orange mx-auto mb-4 neon-glow" />
+                    <Icon name="BarChart3" className="h-16 w-16 text-neon-orange mx-auto mb-4" />
                     <p className="text-neon-green text-lg font-medium heading-section">Trading Chart</p>
                     <p className="text-muted-foreground">Профессиональный график {selectedCoin}</p>
                     <p className="text-xs text-neon-orange mt-2">Кликни для открытия Full Chart View</p>
                     <div className="mt-4 flex justify-center gap-4">
                       <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-neon-green neon-glow"></div>
+                        <div className="w-3 h-3 rounded-full bg-neon-green"></div>
                         <span className="text-sm text-neon-green">Pump Zone</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-neon-red neon-glow"></div>
+                        <div className="w-3 h-3 rounded-full bg-neon-red"></div>
                         <span className="text-sm text-neon-red">Dump Zone</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-neon-yellow neon-glow"></div>
+                        <div className="w-3 h-3 rounded-full bg-neon-yellow"></div>
                         <span className="text-sm text-neon-yellow">Neutral</span>
                       </div>
                     </div>
