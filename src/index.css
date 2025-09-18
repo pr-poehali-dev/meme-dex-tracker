@@ -104,7 +104,6 @@
       0 0 5px currentColor,
       0 0 10px currentColor,
       0 0 15px currentColor;
-    transition: all 0.3s ease;
   }
 
   .neon-text {
@@ -122,68 +121,10 @@
     );
     border: 1px solid rgba(255, 106, 0, 0.3);
     backdrop-filter: blur(10px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .cyber-card:hover {
-    border-color: rgba(255, 106, 0, 0.6);
-    box-shadow: 0 0 20px rgba(255, 106, 0, 0.2);
-    transform: translateY(-2px);
   }
 
   .pulse-neon {
     animation: pulse-neon 2s ease-in-out infinite alternate;
-  }
-
-  .signal-pulse {
-    animation: signal-pulse 1.5s ease-in-out infinite;
-  }
-
-  .chart-glow {
-    animation: chart-glow 3s ease-in-out infinite alternate;
-  }
-
-  .terminal-scan {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .terminal-scan::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(0, 255, 127, 0.1),
-      transparent
-    );
-    animation: scan 3s linear infinite;
-    z-index: 1;
-  }
-
-  .button-glow:hover {
-    box-shadow: 0 0 15px currentColor;
-    transform: scale(1.05);
-  }
-
-  .coin-item {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .coin-item:hover {
-    transform: translateX(4px);
-  }
-
-  .fade-in {
-    animation: fadeIn 0.5s ease-out;
-  }
-
-  .slide-up {
-    animation: slideUp 0.4s ease-out;
   }
 
   @keyframes pulse-neon {
@@ -198,93 +139,6 @@
         0 0 10px currentColor,
         0 0 20px currentColor,
         0 0 30px currentColor;
-    }
-  }
-
-  @keyframes signal-pulse {
-    0%,
-    100% {
-      opacity: 1;
-      box-shadow: 0 0 5px currentColor;
-    }
-    50% {
-      opacity: 0.7;
-      box-shadow:
-        0 0 20px currentColor,
-        0 0 30px currentColor;
-    }
-  }
-
-  @keyframes chart-glow {
-    from {
-      box-shadow: 0 0 10px rgba(255, 106, 0, 0.3);
-    }
-    to {
-      box-shadow:
-        0 0 30px rgba(255, 106, 0, 0.6),
-        0 0 40px rgba(0, 255, 127, 0.2);
-    }
-  }
-
-  @keyframes scan {
-    0% {
-      left: -100%;
-    }
-    100% {
-      left: 100%;
-    }
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .gpu-accelerated {
-    will-change: transform, opacity;
-    transform: translateZ(0);
-  }
-
-  .price-up {
-    animation: priceUp 0.6s ease-out;
-  }
-
-  .price-down {
-    animation: priceDown 0.6s ease-out;
-  }
-
-  @keyframes priceUp {
-    0% {
-      background-color: rgba(0, 255, 127, 0.3);
-    }
-    100% {
-      background-color: transparent;
-    }
-  }
-
-  @keyframes priceDown {
-    0% {
-      background-color: rgba(255, 46, 46, 0.3);
-    }
-    100% {
-      background-color: transparent;
     }
   }
 }
