@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +30,9 @@ const signals = [
 export default function Index() {
   const [selectedCoin, setSelectedCoin] = useState<string>("DOGEUSDT");
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTimeframe, setSelectedTimeframe] = useState("1h");
+  const [newSignals, setNewSignals] = useState<{[key: string]: boolean}>({});
+  const [priceChanges, setPriceChanges] = useState<{[key: string]: 'up' | 'down' | null}>({});
 
   const filteredCoins = mockCoins.filter(coin => 
     coin.symbol.toLowerCase().includes(searchQuery.toLowerCase())
@@ -51,6 +54,69 @@ export default function Index() {
     }
   };
 
+  // Горячие клавиши для профи-трейдеров
+  const handleKeyPress = useCallback((e: KeyboardEvent) => {
+    const key = e.key.toLowerCase();
+    
+    // Таймфреймы: 1, 5, 15, h, 4, d
+    switch (key) {
+      case '1':
+        setSelectedTimeframe('1m');
+        break;
+      case '5':
+        setSelectedTimeframe('5m');
+        break;
+      case '6': // 15 = 6 (1+5)
+        setSelectedTimeframe('15m');
+        break;
+      case 'h':
+        setSelectedTimeframe('1h');
+        break;
+      case '4':
+        setSelectedTimeframe('4h');
+        break;
+      case 'd':
+        setSelectedTimeframe('1d');
+        break;
+      case 'escape':
+        setSearchQuery('');
+        break;
+      case 'enter':
+        if (filteredCoins.length > 0) {
+          setSelectedCoin(filteredCoins[0].symbol);
+        }
+        break;
+    }
+  }, [filteredCoins]);
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [handleKeyPress]);
+
+  // Симуляция новых сигналов
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const randomCoin = mockCoins[Math.floor(Math.random() * mockCoins.length)];
+      setNewSignals(prev => ({ ...prev, [randomCoin.symbol]: true }));
+      
+      // Убираем подсветку через 2 секунды
+      setTimeout(() => {
+        setNewSignals(prev => ({ ...prev, [randomCoin.symbol]: false }));
+      }, 2000);
+      
+      // Симуляция изменения цены
+      const priceDirection = Math.random() > 0.5 ? 'up' : 'down';
+      setPriceChanges(prev => ({ ...prev, [randomCoin.symbol]: priceDirection }));
+      
+      setTimeout(() => {
+        setPriceChanges(prev => ({ ...prev, [randomCoin.symbol]: null }));
+      }, 600);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
@@ -67,7 +133,7 @@ export default function Index() {
             </p>
             <Button 
               size="lg" 
-              className="bg-neon-orange hover:bg-neon-orange/80 text-black font-bold neon-glow"
+              className="bg-neon-orange hover:bg-neon-orange/80 text-black font-bold neon-glow button-glow transition-all duration-300"
             >
               <Icon name="Rocket" className="mr-2 h-5 w-5" />
               🚀 Открыть дашборд
@@ -75,8 +141,8 @@ export default function Index() {
           </div>
           
           {/* Features */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-            <Card className="cyber-card">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 fade-in">
+            <Card className="cyber-card slide-up gpu-accelerated">
               <CardHeader>
                 <div className="text-neon-magenta text-2xl mb-2">🔮</div>
                 <CardTitle className="text-neon-green">Предиктивные индикаторы</CardTitle>
@@ -86,7 +152,7 @@ export default function Index() {
               </CardContent>
             </Card>
             
-            <Card className="cyber-card">
+            <Card className="cyber-card slide-up gpu-accelerated" style={{animationDelay: '0.1s'}}>
               <CardHeader>
                 <div className="text-neon-orange text-2xl mb-2">📊</div>
                 <CardTitle className="text-neon-green">Профессиональные графики</CardTitle>
@@ -96,7 +162,7 @@ export default function Index() {
               </CardContent>
             </Card>
             
-            <Card className="cyber-card">
+            <Card className="cyber-card slide-up gpu-accelerated" style={{animationDelay: '0.2s'}}>
               <CardHeader>
                 <div className="text-neon-yellow text-2xl mb-2">⚡</div>
                 <CardTitle className="text-neon-green">Real-time данные</CardTitle>
@@ -115,7 +181,7 @@ export default function Index() {
           
           {/* Left Panel - Watchlist */}
           <div className="lg:col-span-1">
-            <Card className="cyber-card h-fit">
+            <Card className="cyber-card h-fit terminal-scan gpu-accelerated">
               <CardHeader>
                 <CardTitle className="text-neon-orange flex items-center gap-2">
                   <Icon name="Eye" className="h-5 w-5" />
@@ -132,15 +198,20 @@ export default function Index() {
                 </div>
               </CardHeader>
               <CardContent className="space-y-2">
-                {filteredCoins.map((coin) => (
+                {filteredCoins.map((coin, index) => (
                   <div
                     key={coin.symbol}
                     onClick={() => setSelectedCoin(coin.symbol)}
-                    className={`p-3 rounded-lg cursor-pointer transition-colors border ${
+                    className={`p-3 rounded-lg cursor-pointer transition-colors border coin-item gpu-accelerated ${
                       selectedCoin === coin.symbol 
                         ? 'border-neon-orange bg-neon-orange/10' 
                         : 'border-border hover:border-neon-orange/50'
+                    } ${
+                      newSignals[coin.symbol] ? 'signal-pulse' : ''
+                    } ${
+                      priceChanges[coin.symbol] ? `price-${priceChanges[coin.symbol]}` : ''
                     }`}
+                    style={{animationDelay: `${index * 0.1}s`}}
                   >
                     <div className="flex items-center justify-between mb-1">
                       <span className="font-medium text-foreground">{coin.symbol}</span>
@@ -160,7 +231,7 @@ export default function Index() {
                 
                 <Button 
                   variant="outline" 
-                  className="w-full mt-4 border-neon-orange text-neon-orange hover:bg-neon-orange/10"
+                  className="w-full mt-4 border-neon-orange text-neon-orange hover:bg-neon-orange/10 button-glow transition-all duration-300"
                 >
                   <Icon name="Plus" className="mr-2 h-4 w-4" />
                   Добавить монету
@@ -171,7 +242,7 @@ export default function Index() {
 
           {/* Center - Chart */}
           <div className="lg:col-span-2">
-            <Card className="cyber-card">
+            <Card className="cyber-card chart-glow gpu-accelerated">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-neon-green flex items-center gap-2">
@@ -182,9 +253,14 @@ export default function Index() {
                     {['1m', '5m', '15m', '1h', '4h', '1d'].map((timeframe) => (
                       <Button 
                         key={timeframe}
-                        variant="outline" 
+                        variant={selectedTimeframe === timeframe ? "default" : "outline"}
                         size="sm"
-                        className="border-neon-orange text-neon-orange hover:bg-neon-orange/20"
+                        onClick={() => setSelectedTimeframe(timeframe)}
+                        className={`transition-all duration-300 ${
+                          selectedTimeframe === timeframe 
+                            ? 'bg-neon-orange text-black border-neon-orange neon-glow' 
+                            : 'border-neon-orange text-neon-orange hover:bg-neon-orange/20 button-glow'
+                        }`}
                       >
                         {timeframe}
                       </Button>
@@ -193,7 +269,7 @@ export default function Index() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="h-96 bg-cyber-gray rounded-lg flex items-center justify-center border border-border">
+                <div className="h-96 bg-cyber-gray rounded-lg flex items-center justify-center border border-border terminal-scan">
                   <div className="text-center">
                     <Icon name="BarChart3" className="h-16 w-16 text-neon-orange mx-auto mb-4 neon-glow" />
                     <p className="text-neon-green text-lg font-medium">Trading Chart</p>
@@ -211,6 +287,9 @@ export default function Index() {
                         <div className="w-3 h-3 rounded-full bg-neon-yellow neon-glow"></div>
                         <span className="text-sm text-neon-yellow">Neutral</span>
                       </div>
+                    </div>
+                    <div className="mt-4 text-xs text-muted-foreground">
+                      Горячие клавиши: 1,5,6,H,4,D (таймфреймы) • ESC (очистить поиск) • ENTER (выбрать первую монету)
                     </div>
                   </div>
                 </div>
@@ -232,12 +311,13 @@ export default function Index() {
                 {signals.map((signal, index) => (
                   <div 
                     key={index}
-                    className="p-3 rounded-lg border border-border bg-cyber-gray/50"
+                    className="p-3 rounded-lg border border-border bg-cyber-gray/50 fade-in gpu-accelerated"
+                    style={{animationDelay: `${index * 0.2}s`}}
                   >
                     <div className="flex items-center gap-2 mb-2">
                       <Badge 
                         variant="outline" 
-                        className={`${signal.type === 'pump' ? 'border-neon-green text-neon-green' : 'border-neon-red text-neon-red'} neon-glow`}
+                        className={`${signal.type === 'pump' ? 'border-neon-green text-neon-green' : 'border-neon-red text-neon-red'} neon-glow signal-pulse`}
                       >
                         {signal.type === 'pump' ? '🚀' : '⚠️'} {signal.type.toUpperCase()}
                       </Badge>
@@ -251,7 +331,7 @@ export default function Index() {
                 <div className="pt-4">
                   <Button 
                     variant="outline" 
-                    className="w-full border-neon-green text-neon-green hover:bg-neon-green/10"
+                    className="w-full border-neon-green text-neon-green hover:bg-neon-green/10 button-glow transition-all duration-300"
                   >
                     <Icon name="Settings" className="mr-2 h-4 w-4" />
                     Настройки сигналов
