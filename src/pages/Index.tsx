@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -28,6 +29,7 @@ const signals = [
 ];
 
 export default function Index() {
+  const navigate = useNavigate();
   const [selectedCoin, setSelectedCoin] = useState<string>("DOGEUSDT");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -193,11 +195,15 @@ export default function Index() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="h-96 bg-cyber-gray rounded-lg flex items-center justify-center border border-border">
+                <div 
+                  className="h-96 bg-cyber-gray rounded-lg flex items-center justify-center border border-border cursor-pointer hover:border-neon-orange/50 transition-colors"
+                  onClick={() => navigate(`/chart/${selectedCoin}`)}
+                >
                   <div className="text-center">
                     <Icon name="BarChart3" className="h-16 w-16 text-neon-orange mx-auto mb-4 neon-glow" />
                     <p className="text-neon-green text-lg font-medium">Trading Chart</p>
                     <p className="text-muted-foreground">Профессиональный график {selectedCoin}</p>
+                    <p className="text-xs text-neon-orange mt-2">Кликни для открытия Full Chart View</p>
                     <div className="mt-4 flex justify-center gap-4">
                       <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-full bg-neon-green neon-glow"></div>
