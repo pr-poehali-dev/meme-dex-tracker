@@ -1,8 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Шрифтовые утилиты MemeDex */
+  .heading-hero {
+    @apply font-heading font-extrabold tracking-tight;
+  }
+
+  .heading-section {
+    @apply font-heading font-bold;
+  }
+
+  .text-trading {
+    @apply font-mono font-medium;
+  }
+
+  .text-data {
+    @apply font-mono tabular-nums;
+  }
+
+  .text-corporate {
+    @apply font-corporate;
+  }
+
   :root {
     --background: 0 0% 4%;
     --foreground: 120 100% 75%;

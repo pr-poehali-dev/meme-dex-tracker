@@ -60,11 +60,11 @@ export default function Index() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,106,0,0.1)_0%,transparent_70%)]" />
         <div className="relative container mx-auto px-4 py-16 text-center">
           <div className="mb-6">
-            <h1 className="text-6xl font-bold mb-4">
+            <h1 className="text-6xl mb-4 heading-hero">
               <span className="text-neon-orange neon-text pulse-neon">Meme</span>
               <span className="text-neon-green neon-text">Dex</span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 font-body">
               Realtime графики мем-коинов. Pump & Dump сигналы до того, как рынок рванёт
             </p>
             <Button 
@@ -81,7 +81,7 @@ export default function Index() {
             <Card className="cyber-card">
               <CardHeader>
                 <div className="text-neon-magenta text-2xl mb-2">🔮</div>
-                <CardTitle className="text-neon-green">Предиктивные индикаторы</CardTitle>
+                <CardTitle className="text-neon-green heading-section">Предиктивные индикаторы</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">Видим движение до того, как его увидит толпа</p>
@@ -91,7 +91,7 @@ export default function Index() {
             <Card className="cyber-card">
               <CardHeader>
                 <div className="text-neon-orange text-2xl mb-2">📊</div>
-                <CardTitle className="text-neon-green">Профессиональные графики</CardTitle>
+                <CardTitle className="text-neon-green heading-section">Профессиональные графики</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">Графики уровня TradingView с неоновым стилем</p>
@@ -101,7 +101,7 @@ export default function Index() {
             <Card className="cyber-card">
               <CardHeader>
                 <div className="text-neon-yellow text-2xl mb-2">⚡</div>
-                <CardTitle className="text-neon-green">Real-time данные</CardTitle>
+                <CardTitle className="text-neon-green heading-section">Real-time данные</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">Прямое подключение к MEXC/Bitget</p>
@@ -119,7 +119,7 @@ export default function Index() {
           <div className="lg:col-span-1">
             <Card className="cyber-card h-fit">
               <CardHeader>
-                <CardTitle className="text-neon-orange flex items-center gap-2">
+                <CardTitle className="text-neon-orange flex items-center gap-2 heading-section">
                   <Icon name="Eye" className="h-5 w-5" />
                   Watchlist
                 </CardTitle>
@@ -152,8 +152,8 @@ export default function Index() {
                       />
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">${coin.price.toFixed(6)}</span>
-                      <span className={coin.change24h >= 0 ? 'text-neon-green' : 'text-neon-red'}>
+                      <span className="text-muted-foreground text-data">${coin.price.toFixed(6)}</span>
+                      <span className={`text-data ${coin.change24h >= 0 ? 'text-neon-green' : 'text-neon-red'}`}>
                         {coin.change24h >= 0 ? '+' : ''}{coin.change24h.toFixed(2)}%
                       </span>
                     </div>
@@ -176,7 +176,7 @@ export default function Index() {
             <Card className="cyber-card">
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-neon-green flex items-center gap-2">
+                  <CardTitle className="text-neon-green flex items-center gap-2 heading-section">
                     <Icon name="BarChart3" className="h-5 w-5" />
                     {selectedCoin}
                   </CardTitle>
@@ -201,7 +201,7 @@ export default function Index() {
                 >
                   <div className="text-center">
                     <Icon name="BarChart3" className="h-16 w-16 text-neon-orange mx-auto mb-4 neon-glow" />
-                    <p className="text-neon-green text-lg font-medium">Trading Chart</p>
+                    <p className="text-neon-green text-lg font-medium heading-section">Trading Chart</p>
                     <p className="text-muted-foreground">Профессиональный график {selectedCoin}</p>
                     <p className="text-xs text-neon-orange mt-2">Кликни для открытия Full Chart View</p>
                     <div className="mt-4 flex justify-center gap-4">
@@ -228,7 +228,7 @@ export default function Index() {
           <div className="lg:col-span-1">
             <Card className="cyber-card">
               <CardHeader>
-                <CardTitle className="text-neon-red flex items-center gap-2">
+                <CardTitle className="text-neon-red flex items-center gap-2 heading-section">
                   <Icon name="Zap" className="h-5 w-5" />
                   Live Сигналы
                 </CardTitle>
